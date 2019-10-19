@@ -30,10 +30,10 @@
                 <a class="active item" href="index.html">
                   ホーム
                 </a>
-                <a class="active item">
+                <a class="item" href="blockuser.html">
                   最近ブロックしたスパム 
                 </a>
-                <a class="item">
+                <a class="item" href="setting.html">
                   設定
                 </a>
                 <div class="right menu">
@@ -50,4 +50,18 @@
         </button>
 
     <h1>hello!</h1>
+    <script>
+            var param = location.search;
+            console.log(param);
+            console.log(getParam('ver'));
+            function getParam(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+            </script>
 </body>
