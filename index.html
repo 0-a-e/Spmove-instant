@@ -53,8 +53,70 @@
     <script>
             var param = location.search;
             console.log(param);
-            console.log(getParam('ver'));
-            function getParam(name, url) {
+            var usr = getParam('user');
+            var key = getParam('key');
+            console.log('user: ' + usr + ' key: ' + key);
+            const url = "https://spmoveapi.herokuapp.com/serverauth?user=" + usr + "&seacret=" + key;
+            console.log(url);
+        var LSU = localStorage["user"];
+        var LSK = localStorage["kery"];
+        console.log(localStorage.getItem("user"));
+        console.log(localStorage.getItem("kery"));
+        if(LSU){
+            console.log(LSU);
+            console.log(LSK);
+            const Lurl = "https://spmoveapi.herokuapp.com/serverauth?user=" + LSU + "&seacret=" + LSK;
+            console.log(Lurl);
+            xhr = new XMLHttpRequest();
+xhr.onload = function () {
+    if (xhr.readyState === xhr.DONE) {
+if (xhr.status == 500 || xhr.responseText == "ERROR") {
+        console.log("error");
+        } else if (xhr.status === 200) {
+        var res = xhr.responseText;
+        console.log(res);
+        var resp = JSON.parse(res);
+        var userval = resp["Name"];
+        var keyval = resp["access_token"]["AS"];
+        console.log(userval);
+        console.log(keyval);
+        } else {
+            console.log("unknown Error");
+    }
+};
+}
+xhr.open("GET", Lurl);
+xhr.send();
+        } else {
+xhr = new XMLHttpRequest();
+xhr.onload = function () {
+    if (xhr.readyState === xhr.DONE) {
+if (xhr.status == 500 || xhr.responseText == "ERROR") {
+        console.log("error");
+        } else if (xhr.status === 200) {
+        var res = xhr.responseText;
+        console.log(res);
+        var resp = JSON.parse(res);
+        var userval = resp["Name"];
+        var keyval = resp["access_token"]["AS"];
+        localStorage.removeItem("user");
+        localStorage.removeItem("kery");
+        console.log(keyval);
+        localStorage.setItem("kery",keyval);
+        localStorage["user"] = userval;
+        console.log("LOCALSTORAGE KEY: " + localStorage["kery"]);
+        console.log(userval);
+        console.log(keyval);
+        } else {
+            console.log("unknown Error");
+    }
+};
+}
+xhr.open("GET", url);
+xhr.send();
+console.log("LOCALSTORAGE KEY2: " + localStorage["kery"]);
+}
+ function getParam(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -63,5 +125,6 @@
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+console.log("LOCALSTORAGE KEY3: " + localStorage["kery"]);
             </script>
 </body>
